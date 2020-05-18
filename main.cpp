@@ -3,7 +3,6 @@
 //  Proyecto Final
 //
 //  Created by Cristina De León and Lourdes  Navarretes
-//  Copyright © 2020 Cristina De León. All rights reserved.
 //
 
 #include <GL/glew.h>

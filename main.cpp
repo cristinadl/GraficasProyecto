@@ -766,8 +766,8 @@ void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
         // Cara Inferior
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 70, // Arriba Izquierda
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - 30, // Arriba Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength + 10, centerPosZ - 30, // Abajo Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength + 10, centerPosZ + 70
+        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ - 30, // Abajo Derecha
+        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ + 70
 
     };
     //Arreglo para agregar color

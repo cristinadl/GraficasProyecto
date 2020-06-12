@@ -1,4 +1,4 @@
-//
+/
 //  main.cpp
 //  Proyecto Final
 //
@@ -100,10 +100,10 @@ int main(void)
 
         glPopMatrix();
 
-//        glPushMatrix draw luego glpop de manera anidada, Primero dibujar la escena y luego ahí dentro dibujar lo demas, cada que hago push y pop se guarga lo que hace
+        //        glPushMatrix draw luego glpop de manera anidada, Primero dibujar la escena y luego ahí dentro dibujar lo demas, cada que hago push y pop se guarga lo que hace
 
         glfwSwapBuffers(window);
-        
+
 
 
         glfwPollEvents();
@@ -211,27 +211,35 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-    glVertexPointer( 3, GL_FLOAT, 0, vertices );
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
     glColorPointer(3, GL_FLOAT, 0, colour);
-    glDrawArrays( GL_QUADS, 0, 24 );
-    glDisableClientState( GL_VERTEX_ARRAY );
+    glDrawArrays(GL_QUADS, 0, 24);
+    glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
-    
+
     // Se establece el sistema de coordenadas dentro de la ventana
     GLfloat halfScreenWidth = SCREEN_WIDTH / 2;
     GLfloat halfScreenHeight = SCREEN_HEIGHT / 2;
 
-    DrawPata2(halfScreenWidth, halfScreenHeight -149, -600, 200);
-    DrawPata3(halfScreenWidth, halfScreenHeight -149, -600, 200);
-    DrawPata4(halfScreenWidth + 100, halfScreenHeight -149, -600, 200);
-    DrawPata1(halfScreenWidth + 100, halfScreenHeight -149, -600, 200);
-    DrawMesa(halfScreenWidth, halfScreenHeight -149, -600, 200);
+    DrawPata2(halfScreenWidth, halfScreenHeight - 149, -600, 200);
+    DrawPata3(halfScreenWidth, halfScreenHeight - 149, -600, 200);
+    DrawPata4(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
+    DrawPata1(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
+    DrawMesa(halfScreenWidth, halfScreenHeight - 149, -600, 200);
     DrawPlane(halfScreenWidth, halfScreenHeight - (-200), -600, 200);
+    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
     glPushMatrix();
     DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    glfwSetTime(0.0f);
+    if (glfwGetTime() > 0.0f)
+    {
+        rotationY += 0.1;
+        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+        glfwSetTime(0.0f);
+    }
     glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
-    glTranslated( moveVasoX, 0 , 0);
-    glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight -10), 200);
+    glTranslated(moveVasoX, 0, 0);
+    glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
     glRotatef(rotationX, 1, 0, 0); // Rotar escena en X
     glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
     glPopMatrix();
@@ -808,3 +816,4 @@ void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
+

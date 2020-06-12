@@ -1,4 +1,4 @@
-/
+
 //  main.cpp
 //  Proyecto Final
 //
@@ -152,10 +152,10 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
             translationY -= 10;
             break;
         case GLFW_KEY_J:
-            moveVasoX -= 10;
+            moveVasoX -= 1;
             break;
         case GLFW_KEY_K:
-            moveVasoX += 10;
+            moveVasoX += 1;
             break;
         }
 
@@ -226,22 +226,31 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     DrawPata4(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawPata1(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawMesa(halfScreenWidth, halfScreenHeight - 149, -600, 200);
-    DrawPlane(halfScreenWidth, halfScreenHeight - (-200), -600, 200);
     DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    
+    //DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
     glPushMatrix();
-    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    
     glfwSetTime(0.0f);
-    if (glfwGetTime() > 0.0f)
-    {
-        rotationY += 0.1;
-        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
-        glfwSetTime(0.0f);
-    }
-    glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
-    glTranslated(moveVasoX, 0, 0);
-    glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
-    glRotatef(rotationX, 1, 0, 0); // Rotar escena en X
-    glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
+    //if (glfwGetTime() > 0.0f)
+    //{
+    //    rotationY += 0.1;
+    //    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    //    glfwSetTime(0.0f);
+    //}
+    //glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
+    //glTranslated(moveVasoX, 0, 0);
+    //glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
+    moveVasoX += 0.1;
+    glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
+        //glTranslated(moveVasoX, moveVasoX, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
+        //AquÌ se crearÌa el vector de escalado
+        //glRotatef(moveVasoX, 1, 0, 0); // Rotar escena en X
+        glRotatef(moveVasoX, 0, 1, 0); // Rotar escena en Y
+        glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+        //        glScalef(1.0f, 1.0f, 1.0f);
+        DrawPlane(halfScreenWidth, halfScreenHeight - (-200), -600, 200);
+    //glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
     glPopMatrix();
 }
 

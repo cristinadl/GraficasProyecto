@@ -244,8 +244,9 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
 
     glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
         glTranslated(moveVasoX, 0, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
+        glScalef(0.5, 0.5, 0.5);
     glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 120, -660, 200);
     glPopMatrix();
     
 }

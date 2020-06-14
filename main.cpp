@@ -24,14 +24,17 @@ void DrawPata3(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
 void DrawPata4(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
 void DrawPata1(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
 void DrawMesa(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
+void DrawVentana(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
 void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
 void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
+void DrawPlane2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength);
 
 
 GLfloat rotationX = 0.0f;
 GLfloat rotationY = 0.0f;
 GLfloat translationX = 0.0f;
 GLfloat translationY = 0.0f;
+GLfloat movePlaneX = 0.0f;
 GLfloat moveVasoX = 0.0f;
 
 
@@ -87,7 +90,6 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_DEPTH_BUFFER_BIT);
 
-        // Render (Se crea el cubo y se generan los cambios en los vectores de transformaciÛn
         glPushMatrix();
         glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
         glTranslated(translationX, translationY, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
@@ -95,7 +97,6 @@ int main(void)
         glRotatef(rotationX, 1, 0, 0); // Rotar escena en X
         glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
         glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        //        glScalef(1.0f, 1.0f, 1.0f);
         DrawCuarto(halfScreenWidth, halfScreenHeight, -500, 500);
 
         glPopMatrix();
@@ -152,10 +153,12 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
             translationY -= 10;
             break;
         case GLFW_KEY_J:
-            moveVasoX -= 1;
-            break;
+                if(moveVasoX - 10 >= -70)
+                    moveVasoX -= 10;
+                break;
         case GLFW_KEY_K:
-            moveVasoX += 1;
+            if(moveVasoX + 10 <= 80)
+                moveVasoX += 10;
             break;
         }
 
@@ -175,21 +178,31 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
         centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ + halfSideLength, // Arriba Derecha
         centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength, // Abajo Derecha
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength, // Abajo Izquierda
-
-
-
-
         // Cara Derecha
         centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ + halfSideLength, // Arriba Izquierda
         centerPosX + halfSideLength, centerPosY + halfSideLength, centerPosZ - halfSideLength, // Arriba Derecha
         centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // Abajo Derecha
         centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength, // Abajo Izquierda
-
         // Cara Inferior
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength, // Arriba Izquierda
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // Arriba Derecha
         centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ - halfSideLength, // Abajo Derecha
-        centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength  // Abajo Izquierda
+        centerPosX + halfSideLength, centerPosY - halfSideLength, centerPosZ + halfSideLength,  // Abajo Izquierda
+        
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        0,0,0,
     };
 
     GLfloat colour[] = {
@@ -226,32 +239,15 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     DrawPata4(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawPata1(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawMesa(halfScreenWidth, halfScreenHeight - 149, -600, 200);
-    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
-    
-    //DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    DrawVentana(halfScreenWidth+250, halfScreenHeight, -500, 50);
     glPushMatrix();
-    
-    glfwSetTime(0.0f);
-    //if (glfwGetTime() > 0.0f)
-    //{
-    //    rotationY += 0.1;
-    //    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
-    //    glfwSetTime(0.0f);
-    //}
-    //glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
-    //glTranslated(moveVasoX, 0, 0);
-    //glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
-    moveVasoX += 0.1;
+
     glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
-        //glTranslated(moveVasoX, moveVasoX, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
-        //AquÌ se crearÌa el vector de escalado
-        //glRotatef(moveVasoX, 1, 0, 0); // Rotar escena en X
-        glRotatef(moveVasoX, 0, 1, 0); // Rotar escena en Y
-        glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        //        glScalef(1.0f, 1.0f, 1.0f);
-        DrawPlane(halfScreenWidth, halfScreenHeight - (-200), -600, 200);
-    //glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
+        glTranslated(moveVasoX, 0, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
+    glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
     glPopMatrix();
+    
 }
 
 
@@ -658,7 +654,7 @@ void DrawMesa(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
            0.0, 0.0, 0.0,
     };
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+//    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -706,7 +702,13 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 70, // Arriba Izquierda
         centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 30, // Arriba Derecha
         centerPosX + halfSideLength - 160, centerPosY - halfSideLength + 10, centerPosZ + 30, // Abajo Derecha
-        centerPosX + halfSideLength - 160, centerPosY - halfSideLength + 10, centerPosZ + 70
+        centerPosX + halfSideLength - 160, centerPosY - halfSideLength + 10, centerPosZ + 70,
+        
+        0,0,0,
+        0,0,0,
+        0,0,0,
+        0,0,0
+        
 
     };
     //Arreglo para agregar color
@@ -735,6 +737,10 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
         0.0,0.0,255.0,
         0.0,0.0,255.0
     };
+    // Se establece el sistema de coordenadas dentro de la ventana
+    GLfloat halfScreenWidth = SCREEN_WIDTH / 2;
+    GLfloat halfScreenHeight = SCREEN_HEIGHT / 2;
+
 
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
@@ -746,72 +752,271 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     glDrawArrays(GL_QUADS, 0, 24);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    
+    glPushMatrix();
+    
+    glfwSetTime(0.0f);
+    //if (glfwGetTime() > 0.0f)
+    //{
+    //    rotationY += 0.1;
+    //    DrawVaso(halfScreenWidth + 75, halfScreenHeight - 10, -620, 200);
+    //    glfwSetTime(0.0f);
+    //}
+    //glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
+    //glTranslated(moveVasoX, 0, 0);
+    //glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
+    movePlaneX += 5;
+    glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
+        //glTranslated(moveVasoX, moveVasoX, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
+        //AquÌ se crearÌa el vector de escalado
+        //glRotatef(moveVasoX, 1, 0, 0); // Rotar escena en X
+    glRotatef(movePlaneX, 0, 1, 0); // Rotar escena en Y
+        glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+        //        glScalef(1.0f, 1.0f, 1.0f);
+        DrawPlane(halfScreenWidth, halfScreenHeight+150, -325, 200);
+        DrawPlane2(halfScreenWidth, halfScreenHeight+150, -325, 200);
+    //glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
+    glPopMatrix();
 }
 
 void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
+    
+    GLfloat vertices[] =
+    {
+        //// EDIFICIO CENTRO
+        // Cara Frontal
+        centerPosX - halfSideLength+50, centerPosY  , centerPosZ  + 70, // Arriba Izquierda
+        centerPosX + halfSideLength-50, centerPosY , centerPosZ + 70, // Arriba Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ + 70, // Abajo Derecha
+        centerPosX - halfSideLength+50, centerPosY- 40, centerPosZ + 70, // Abajo Izquierda
+        
+        // Cara Posterior
+        centerPosX - halfSideLength+50, centerPosY , centerPosZ  - 70, // Arriba Izquierda
+        centerPosX + halfSideLength-50, centerPosY , centerPosZ - 70, // Arriba Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ - 70, // Abajo Derecha
+        centerPosX - halfSideLength+50, centerPosY - 40, centerPosZ - 70, // Abajo Izquierda
+        
+        // Cara Izquierda
+        centerPosX - halfSideLength+50, centerPosY , centerPosZ  + 70, // Arriba Izquierda
+        centerPosX - halfSideLength+50, centerPosY , centerPosZ - 70, // Arriba Dereccha
+        centerPosX - halfSideLength+50, centerPosY  - 40, centerPosZ  - 70, // Abajo Derecha
+        centerPosX - halfSideLength+50, centerPosY - 40, centerPosZ + 70, // Abajo Izquierda
+        
+        // Cara Derecha
+        centerPosX + halfSideLength-50, centerPosY , centerPosZ+ 70, // Arriba Izquierda
+        centerPosX + halfSideLength-50, centerPosY  , centerPosZ - 70, // Arriba Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ - 70, // Abajo Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ + 70, // Abajo Izquierda
+        
+        // Cara Superior
+        centerPosX - halfSideLength+50, centerPosY , centerPosZ  + 70 , // Arriba Izquierda
+        centerPosX - halfSideLength+50, centerPosY  , centerPosZ - 70, // Arriba Derecha
+        centerPosX + halfSideLength-50, centerPosY  , centerPosZ - 70, // Abajo Derecha
+        centerPosX + halfSideLength-50, centerPosY  , centerPosZ  + 70, // Abajo Izquierda
+        
+        // Cara Inferior
+        centerPosX - halfSideLength+50, centerPosY - 40, centerPosZ + 70, // Arriba Izquierda
+        centerPosX - halfSideLength+50, centerPosY - 40, centerPosZ - 70, // Arriba Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ  - 70, // Abajo Derecha
+        centerPosX + halfSideLength-50, centerPosY - 40, centerPosZ  + 70
+    
+    };
+    GLfloat colour[] = {
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           255.0, 255.0, 255.0,
+           
+        };
+    
+    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    glEnableClientState( GL_VERTEX_ARRAY );
+    glEnableClientState(GL_COLOR_ARRAY);
+    glVertexPointer( 3, GL_FLOAT, 0, vertices );
+    glColorPointer(3, GL_FLOAT, 0, colour);
+    glDrawArrays( GL_QUADS, 0, 24 );
+    glDisableClientState( GL_VERTEX_ARRAY );
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+
+void DrawPlane2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
+{
+    GLfloat halfSideLength = edgeLength * 0.5f;
+    
+    GLfloat vertices[] =
+    {
+        // Cara Frontal
+                centerPosX - halfSideLength+100, centerPosY  , centerPosZ  + 40, // Arriba Izquierda
+                centerPosX + halfSideLength-100, centerPosY , centerPosZ + 40, // Arriba Derecha
+                centerPosX + halfSideLength-20, centerPosY - 40, centerPosZ + 40, // Abajo Derecha
+                centerPosX - halfSideLength+20, centerPosY- 40, centerPosZ + 40, // Abajo Izquierda
+                
+                // Cara Posterior
+                centerPosX - halfSideLength+100, centerPosY , centerPosZ  - 40, // Arriba Izquierda
+                centerPosX + halfSideLength-100, centerPosY , centerPosZ - 40, // Arriba Derecha
+                centerPosX + halfSideLength-20, centerPosY - 40, centerPosZ - 40, // Abajo Derecha
+                centerPosX - halfSideLength+20, centerPosY - 40, centerPosZ - 40, // Abajo Izquierda
+                
+                // Cara Izquierda
+                centerPosX - halfSideLength+100, centerPosY , centerPosZ  + 40, // Arriba Izquierda
+                centerPosX - halfSideLength+100, centerPosY , centerPosZ - 40, // Arriba Dereccha
+                centerPosX - halfSideLength+20, centerPosY  - 40, centerPosZ  - 40, // Abajo Derecha
+                centerPosX - halfSideLength+20, centerPosY - 40, centerPosZ + 40, // Abajo Izquierda
+                
+                // Cara Derecha
+                centerPosX + halfSideLength-100, centerPosY , centerPosZ+ 40, // Arriba Izquierda
+                centerPosX + halfSideLength-100, centerPosY  , centerPosZ - 40, // Arriba Derecha
+                centerPosX + halfSideLength-20, centerPosY - 40, centerPosZ - 40, // Abajo Derecha
+                centerPosX + halfSideLength-20, centerPosY - 40, centerPosZ + 40, // Abajo Izquierda
+                
+                // Cara Superior
+                centerPosX - halfSideLength+100, centerPosY , centerPosZ  + 40 , // Arriba Izquierda
+                centerPosX - halfSideLength+100, centerPosY  , centerPosZ - 40, // Arriba Derecha
+                centerPosX + halfSideLength-100, centerPosY  , centerPosZ - 40, // Abajo Derecha
+                centerPosX + halfSideLength-100, centerPosY  , centerPosZ  + 40, // Abajo Izquierda
+                
+                // Cara Inferior
+                centerPosX - halfSideLength+100, centerPosY - 40, centerPosZ + 40, // Arriba Izquierda
+                centerPosX - halfSideLength+100, centerPosY - 40, centerPosZ - 40, // Arriba Derecha
+                centerPosX + halfSideLength-100, centerPosY - 40, centerPosZ  - 40, // Abajo Derecha
+                centerPosX + halfSideLength-100, centerPosY - 40, centerPosZ  + 40
+            
+            };
+            GLfloat colour[] = {
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                0.0, 0.0, 0.0,
+                
+                   
+                };
+            
+            //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(GL_TRUE);
+            glEnableClientState( GL_VERTEX_ARRAY );
+            glEnableClientState(GL_COLOR_ARRAY);
+            glVertexPointer( 3, GL_FLOAT, 0, vertices );
+            glColorPointer(3, GL_FLOAT, 0, colour);
+            glDrawArrays( GL_QUADS, 0, 24 );
+            glDisableClientState( GL_VERTEX_ARRAY );
+            glDisableClientState(GL_COLOR_ARRAY);
+        
+}
+void DrawVentana(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
+{
+    GLfloat halfSideLength = edgeLength * 0.5f - 20;
 
     GLfloat vertices[] =
     {
-        //// Pata adelante izq
+        //// EDIFICIO CENTRO
         // Cara Frontal
-        centerPosX - halfSideLength, centerPosY, centerPosZ + 70, // Arriba Izquierda
-        centerPosX + halfSideLength - 300, centerPosY, centerPosZ + 70, // Arriba Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ + 70, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 70, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ + 150, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
 
         // Cara Posterior
-        centerPosX - halfSideLength, centerPosY, centerPosZ - 30, // Arriba Izquierda
-        centerPosX + halfSideLength - 300, centerPosY, centerPosZ - 30, // Arriba Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ + 30, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 30, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ - 150, // Abajo Izquierda
 
         // Cara Izquierda
-        centerPosX - halfSideLength, centerPosY, centerPosZ + 70, // Arriba Izquierda
-        centerPosX - halfSideLength, centerPosY, centerPosZ - 30, // Arriba Dereccha
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - 30, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 70, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Dereccha
+        centerPosX - halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
 
         // Cara Derecha
-        centerPosX + halfSideLength - 300, centerPosY, centerPosZ + 70, // Arriba Izquierda
-        centerPosX + halfSideLength - 300, centerPosY, centerPosZ - 30, // Arriba Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ - 30, // Abajo Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ + 70, // Abajo Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
 
+        // Cara Superior
+        centerPosX - halfSideLength, centerPosY , centerPosZ + 150 , // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY  , centerPosZ - 150, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY  , centerPosZ - 150, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY  , centerPosZ + 150, // Abajo Izquierda
 
         // Cara Inferior
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ + 70, // Arriba Izquierda
-        centerPosX - halfSideLength, centerPosY - halfSideLength, centerPosZ - 30, // Arriba Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ - 30, // Abajo Derecha
-        centerPosX + halfSideLength - 300, centerPosY - halfSideLength, centerPosZ + 70
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150
 
     };
-    //Arreglo para agregar color
     GLfloat colour[] = {
-        0.0, 255.0, 0.0,
-        0.0, 255.0, 0.0,
-        0.0, 255.0, 0.0,
-        0.0, 255.0, 0.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0,
-        0.0,0.0,255.0
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
+           0.0, 0.0, 1.0,
     };
 
     //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
@@ -825,4 +1030,3 @@ void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
-

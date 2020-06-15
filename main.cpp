@@ -239,7 +239,7 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     DrawPata4(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawPata1(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawMesa(halfScreenWidth, halfScreenHeight - 149, -600, 200);
-    DrawVentana(halfScreenWidth+250, halfScreenHeight, -500, 50);
+    DrawVentana(halfScreenWidth, halfScreenHeight, -250, 200);
     glPushMatrix();
 
     glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
@@ -766,7 +766,7 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     //glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
     //glTranslated(moveVasoX, 0, 0);
     //glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
-    movePlaneX += 5;
+    movePlaneX += 0.5;
     glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
         //glTranslated(moveVasoX, moveVasoX, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
         //AquÌ se crearÌa el vector de escalado
@@ -957,40 +957,40 @@ void DrawVentana(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLf
     {
         //// EDIFICIO CENTRO
         // Cara Frontal
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Derecha
-        centerPosX + halfSideLength, centerPosY, centerPosZ + 150, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 10, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 10, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ + 10, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ + 10, // Abajo Izquierda
 
         // Cara Posterior
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Izquierda
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
-        centerPosX + halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY, centerPosZ - 150, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 10, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 10, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ - 10, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ - 10, // Abajo Izquierda
 
         // Cara Izquierda
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Dereccha
-        centerPosX - halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
-        centerPosX - halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 10, // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 10, // Arriba Dereccha
+        centerPosX - halfSideLength, centerPosY, centerPosZ - 10, // Abajo Derecha
+        centerPosX - halfSideLength, centerPosY, centerPosZ + 10, // Abajo Izquierda
 
         // Cara Derecha
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
-        centerPosX + halfSideLength, centerPosY, centerPosZ - 150, // Abajo Derecha
-        centerPosX + halfSideLength, centerPosY, centerPosZ + 150, // Abajo Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 10, // Arriba Izquierda
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 10, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ - 10, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY, centerPosZ + 10, // Abajo Izquierda
 
         // Cara Superior
-        centerPosX - halfSideLength, centerPosY , centerPosZ + 150 , // Arriba Izquierda
-        centerPosX - halfSideLength, centerPosY  , centerPosZ - 150, // Arriba Derecha
-        centerPosX + halfSideLength, centerPosY  , centerPosZ - 150, // Abajo Derecha
-        centerPosX + halfSideLength, centerPosY  , centerPosZ + 150, // Abajo Izquierda
+        centerPosX - halfSideLength, centerPosY , centerPosZ + 10 , // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY  , centerPosZ - 10, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY  , centerPosZ - 10, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY  , centerPosZ + 10, // Abajo Izquierda
 
         // Cara Inferior
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 150, // Arriba Izquierda
-        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 150, // Arriba Derecha
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 150, // Abajo Derecha
-        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 150
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ + 10, // Arriba Izquierda
+        centerPosX - halfSideLength, centerPosY + 100, centerPosZ - 10, // Arriba Derecha
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ - 10, // Abajo Derecha
+        centerPosX + halfSideLength, centerPosY + 100, centerPosZ + 10
 
     };
     GLfloat colour[] = {

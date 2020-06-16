@@ -84,6 +84,8 @@ int main(void)
     GLfloat halfScreenHeight = SCREEN_HEIGHT / 2;
 
 
+
+
     // Loop en donde se estar· dibujando la ventana
     while (!glfwWindowShouldClose(window))
     {
@@ -206,14 +208,14 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     };
 
     GLfloat colour[] = {
-        200.0, 25.0, 0.0,
-        200.0, 200.0, 0.0,
-        200.0, 25.0, 0.0,
-        25.0, 200.0, 0.0,
         25.0, 200.0, 20.0,
         25.0, 200.0, 20.0,
         25.0, 200.0, 20.0,
         255.0, 0.0, 20.0,
+        200.0, 25.0, 0.0,
+        200.0, 200.0, 0.0,
+        200.0, 25.0, 0.0,
+        25.0, 200.0, 0.0,
         25.0, 0.0, 0.0,
         25.0, 0.0, 0.0,
         25.0, 0.0, 0.0,

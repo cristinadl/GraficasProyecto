@@ -71,7 +71,7 @@ int main(void)
     // Se crea el contexto de la ventana
     glfwMakeContextCurrent(window);
 
-    glViewport(0.0f, 0.0f, screenWidth, screenHeight); // EspecÌfica en que parte de la ventana se dibujaran los elementos
+    glViewport(0.0f, 0.0f, screenWidth, screenHeight); // Especifica en que parte de la ventana se dibujaran los elementos
     glMatrixMode(GL_PROJECTION); // Se crea la matriz de proyecciÛn
     glLoadIdentity(); // Se crea de la matriz identidad
     glOrtho(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT, 0, 1000); // Establecer el sistema de coordenadas
@@ -91,23 +91,19 @@ int main(void)
     {
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_DEPTH_BUFFER_BIT);
-
+        
+//      Comienza la elaboración del los objetos aquí
         glPushMatrix();
-        glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
-        glTranslated(translationX, translationY, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
-        //AquÌ se crearÌa el vector de escalado
+        glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca la escena al centro de la pantalla
+        glTranslated(translationX, translationY, 0); // Mueve mueve la escena (perspectiva) usando las teclas de flechas.
         glRotatef(rotationX, 1, 0, 0); // Rotar escena en X
         glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
         glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        DrawCuarto(halfScreenWidth, halfScreenHeight, -500, 500);
+        DrawCuarto(halfScreenWidth, halfScreenHeight, -500, 500); // se le aplican la tranformaciones a la escena y lo que conlleva.
 
         glPopMatrix();
 
-        //        glPushMatrix draw luego glpop de manera anidada, Primero dibujar la escena y luego ahí dentro dibujar lo demas, cada que hago push y pop se guarga lo que hace
-
         glfwSwapBuffers(window);
-
-
 
         glfwPollEvents();
     }
@@ -125,7 +121,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 
     const GLfloat rotationSpeed = 10;
 
-    // Switch en donde se determinan los movimientos del cubo en base a las teclas
+    // Switch en donde se determinan los movimientos del alguno objetos en base a las teclas
     if (action == GLFW_PRESS || action == GLFW_REPEAT)
     {
         switch (key)
@@ -155,11 +151,11 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
             translationY -= 10;
             break;
         case GLFW_KEY_J:
-                if(moveVasoX - 10 >= -70)
+                if(moveVasoX - 10 >= -70) // genera limites para que el vaso no sobre pase la mesa
                     moveVasoX -= 10;
                 break;
         case GLFW_KEY_K:
-            if(moveVasoX + 10 <= 80)
+            if(moveVasoX + 10 <= 80) // genera limites para que el vaso no sobre pase la mesa
                 moveVasoX += 10;
             break;
         }
@@ -168,7 +164,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     }
 }
 
-
+// Función para dibujar la escena (el cuarto)
 void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -221,7 +217,6 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
         25.0, 0.0, 0.0,
         25.0, 0.0, 0.0
     };
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -236,24 +231,29 @@ void DrawCuarto(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
     GLfloat halfScreenWidth = SCREEN_WIDTH / 2;
     GLfloat halfScreenHeight = SCREEN_HEIGHT / 2;
 
+//  Aquí se dibujan aquellas figuras que desees que apliquen la transformación de la figura creada en
+//  esta función (que en este caso es la escena)
     DrawPata2(halfScreenWidth, halfScreenHeight - 149, -600, 200);
     DrawPata3(halfScreenWidth, halfScreenHeight - 149, -600, 200);
     DrawPata4(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawPata1(halfScreenWidth + 100, halfScreenHeight - 149, -600, 200);
     DrawMesa(halfScreenWidth, halfScreenHeight - 149, -600, 200);
     DrawVentana(halfScreenWidth, halfScreenHeight, -250, 200);
+    
+//  Aquí se crea la transformación del vaso.
+//  Toda transformación se comiensa con pushMatrix()
     glPushMatrix();
-
-    glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
-        glTranslated(moveVasoX, 0, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
-        glScalef(0.5, 0.5, 0.5);
+    glTranslatef(halfScreenWidth, halfScreenHeight, -500);
+        glTranslated(moveVasoX, 0, 0); // Mueve el vaso con las teclas J y K al manipularse la variable moveVasoX
+        glScalef(0.5, 0.5, 0.5); // se escala el vaso a que este más pequeño
     glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 120, -660, 200);
-    glPopMatrix();
+        DrawVaso(halfScreenWidth + 75, halfScreenHeight - 120, -660, 200); // se aplican transformaciones al vaso al ser llamado
+                                                                           // dentro del pushMatrix()
+    glPopMatrix(); // Termina transformación
     
 }
 
-
+// Función para dibujar la mesa (una de las cuatro patas)
 void DrawPata2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -326,7 +326,6 @@ void DrawPata2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
              0.0, 0.0, 0.0,
     };
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // Se comentÛ esta linea para quitar poder hacer solidos a los objetos
     glEnable(GL_DEPTH_TEST); //Agregar la proyecciÛn de profundidad
     glDepthMask(GL_TRUE);//Agregar la proyecciÛn de profundidad
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -338,6 +337,7 @@ void DrawPata2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar la mesa (una de las cuatro patas)
 void DrawPata3(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -410,7 +410,6 @@ void DrawPata3(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
              0.0, 0.0, 0.0,
     };
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); // Se comentÛ esta linea para quitar poder hacer solidos a los objetos
     glEnable(GL_DEPTH_TEST); //Agregar la proyecciÛn de profundidad
     glDepthMask(GL_TRUE);//Agregar la proyecciÛn de profundidad
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -422,6 +421,7 @@ void DrawPata3(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar la mesa (una de las cuatro patas)
 void DrawPata4(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -492,7 +492,6 @@ void DrawPata4(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
         0.0, 0.0, 0.0,
         0.0, 0.0, 0.0,
     };
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -504,6 +503,7 @@ void DrawPata4(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar la mesa (una de las cuatro patas)
 void DrawPata1(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -574,7 +574,6 @@ void DrawPata1(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
         0.0, 0.0, 0.0,
         0.0, 0.0, 0.0,
     };
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -586,6 +585,7 @@ void DrawPata1(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar la mesa (pieza central)
 void DrawMesa(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -657,7 +657,6 @@ void DrawMesa(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
            0.0, 0.0, 0.0,
     };
 
-//    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -669,6 +668,7 @@ void DrawMesa(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar el vaso sobre la mesa
 void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -745,7 +745,6 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     GLfloat halfScreenHeight = SCREEN_HEIGHT / 2;
 
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -758,7 +757,11 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     
     glPushMatrix();
     
-    glfwSetTime(0.0f);
+    // Aquí se intento utilizar lo investigado de glfwSetTime,
+    // sin embargo no funcionó al cien y decidimos realizarlo de
+    // otra manera.
+    
+    //glfwSetTime(0.0f);
     //if (glfwGetTime() > 0.0f)
     //{
     //    rotationY += 0.1;
@@ -768,20 +771,18 @@ void DrawVaso(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloa
     //glTranslatef(halfScreenWidth + 75, halfScreenHeight, -620);
     //glTranslated(moveVasoX, 0, 0);
     //glTranslatef(-(halfScreenWidth + 75), -(halfScreenHeight - 10), 200);
-    movePlaneX += 0.5;
-    glTranslatef(halfScreenWidth, halfScreenHeight, -500); // Coloca el cubo al centro de la pantalla
-        //glTranslated(moveVasoX, moveVasoX, 0); // Mueve el cubo con las variables de las teclas (Vector de TraslaciÛn
-        //AquÌ se crearÌa el vector de escalado
-        //glRotatef(moveVasoX, 1, 0, 0); // Rotar escena en X
-    glRotatef(movePlaneX, 0, 1, 0); // Rotar escena en Y
-        glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
-        //        glScalef(1.0f, 1.0f, 1.0f);
-        DrawPlane(halfScreenWidth, halfScreenHeight+150, -325, 200);
-        DrawPlane2(halfScreenWidth, halfScreenHeight+150, -325, 200);
-    //glRotatef(rotationY, 0, 1, 0); // Rotar escena en Y
+    
+    // con esta variable se logra mantener en movimiento el avión
+    movePlaneX += 3; // el valor debe ser < 1 en caso de ser Windows
+    glTranslatef(halfScreenWidth, halfScreenHeight, -500);
+    glRotatef(movePlaneX, 0, 1, 0); // aquí es donde se lográ mover la figura cte mente.
+    glTranslatef(-halfScreenWidth, -halfScreenHeight, 500);
+    DrawPlane(halfScreenWidth, halfScreenHeight+150, -325, 200); // Figura que se asigne dentro de pushMatrix()
+    DrawPlane2(halfScreenWidth, halfScreenHeight+150, -325, 200); // Figura que se le aplican las tranformaciones anteriores.
     glPopMatrix();
 }
 
+// Función para dibujar el avión (el cuerpo)
 void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -867,6 +868,7 @@ void DrawPlane(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLflo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
+// Función para dibujar el avión (las alas)
 void DrawPlane2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f;
@@ -939,7 +941,6 @@ void DrawPlane2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
                    
                 };
             
-            //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
             glEnable(GL_DEPTH_TEST);
             glDepthMask(GL_TRUE);
             glEnableClientState( GL_VERTEX_ARRAY );
@@ -951,6 +952,8 @@ void DrawPlane2(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfl
             glDisableClientState(GL_COLOR_ARRAY);
         
 }
+
+// Función para dibujar la ventana en la pared del cuarto
 void DrawVentana(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLfloat edgeLength)
 {
     GLfloat halfSideLength = edgeLength * 0.5f - 20;
@@ -1022,7 +1025,6 @@ void DrawVentana(GLfloat centerPosX, GLfloat centerPosY, GLfloat centerPosZ, GLf
            0.0, 0.0, 1.0,
     };
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glEnableClientState(GL_VERTEX_ARRAY);
